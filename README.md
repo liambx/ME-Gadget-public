@@ -11,7 +11,9 @@ Please feel free to use this code to run cosmological N-body simulations for you
 just remember to cite the following papers:
 
 https://ui.adsabs.harvard.edu/abs/2019MNRAS.tmp.1961A/abstract
+
 https://ui.adsabs.harvard.edu/abs/2019ApJ...875L..11Z/abstract
+
 https://ui.adsabs.harvard.edu/abs/2018PhRvD..98j3530Z/abstract
 
 The details and tests about the code is given in:
@@ -23,11 +25,15 @@ Dependency:
 The code need the following library to be installed:
 
 a linux system in your computer
+
 OpenMPI v2.0 or higher
+
 GSL v2.4 or higher
+
 FFTW v2.1.5
 
 You may install the packages using my one-click script:
+
 https://github.com/liambx/libinstall
 
 
@@ -48,9 +54,13 @@ In the Makefile, there are five additional options, they are:
 just uncomment the needed OPT, you can use the related functions, as long as you prepared the needed tables in the right name in the code running folder.
 
 #OPT   +=  -DHUBBLE_TABLE 
+
 #OPT   +=  -DDMMASS_TABLE 
+
 #OPT   +=  -DDRAG_TABLE
+
 #OPT   +=  -DDE_TABLE 
+
 #OPT   +=  -DVARG_TABLE 
 
 the DE_TABLE function is not available in the public version, if you need it, as decribed in my paper, please contact me.
