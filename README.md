@@ -1,7 +1,7 @@
 ME-Gadget
 
 Jiajun Zhang
-contact me by email: liamzhang@sjtu.edu.cn
+contact me by email: liambx@ibs.re.kr
 
 ME-Gadget is a modified version of the publicly avaiable N-body simulation code Gadget2.
 ME is short for dark Matter and dark Energy.
