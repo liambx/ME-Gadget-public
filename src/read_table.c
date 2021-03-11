@@ -16,7 +16,7 @@ void me_init_hubble_table(void)
   FILE *fd;
   int loop;
   double ia,ih;
-//  double drift[HUBBLE_TABLE_LENGTH],gravkick[HUBBLE_TABLE_LENGTH],hydrokick[HUBBLE_TABLE_LENGTH];
+  double drift[HUBBLE_TABLE_LENGTH],gravkick[HUBBLE_TABLE_LENGTH],hydrokick[HUBBLE_TABLE_LENGTH];
   char fname[100];
   strcpy(fname,"hubble_table.txt");
   if(!(fd = fopen(fname, "r")))
@@ -65,19 +65,19 @@ void me_init_hubble_table(void)
     {
 		fscanf(fd,"%lf,%lf\n",&a[loop],&h[loop]);	
 		//printf("input, a=%lf,h=%lf\n",a[loop],h[loop]); //debug use
-//		drift[loop] = 1.0/(All.Hubble*h[loop]*a[loop]*a[loop]*a[loop]);
-//		gravkick[loop] = 1.0/(All.Hubble*h[loop]*a[loop]*a[loop]);
-//		hydrokick[loop] = 1.0/(All.Hubble*h[loop]*pow(a[loop], 3 * GAMMA_MINUS1) * a[loop]);
+		drift[loop] = 1.0/(All.Hubble*h[loop]*a[loop]*a[loop]*a[loop]);
+		gravkick[loop] = 1.0/(All.Hubble*h[loop]*a[loop]*a[loop]);
+		hydrokick[loop] = 1.0/(All.Hubble*h[loop]*pow(a[loop], 3 * GAMMA_MINUS1) * a[loop]);
 	}
   MeHubbleAcc = gsl_interp_accel_alloc();
   MeHubbleSpline = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
-//  MeHubbleSplineDRIFT = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
-//  MeHubbleSplineGRAVKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
-//  MeHubbleSplineHYDROKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
+  MeHubbleSplineDRIFT = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
+  MeHubbleSplineGRAVKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
+  MeHubbleSplineHYDROKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
   gsl_spline_init(MeHubbleSpline, a, h, HUBBLE_TABLE_LENGTH);
-//  gsl_spline_init(MeHubbleSplineDRIFT, a, drift, HUBBLE_TABLE_LENGTH);
-//  gsl_spline_init(MeHubbleSplineGRAVKICK, a, gravkick, HUBBLE_TABLE_LENGTH);
-//  gsl_spline_init(MeHubbleSplineHYDROKICK, a, hydrokick, HUBBLE_TABLE_LENGTH);
+  gsl_spline_init(MeHubbleSplineDRIFT, a, drift, HUBBLE_TABLE_LENGTH);
+  gsl_spline_init(MeHubbleSplineGRAVKICK, a, gravkick, HUBBLE_TABLE_LENGTH);
+  gsl_spline_init(MeHubbleSplineHYDROKICK, a, hydrokick, HUBBLE_TABLE_LENGTH);
   if(ThisTask==0)
   {
 	printf("Hubble Table loading done.\n");
