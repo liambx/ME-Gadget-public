@@ -16,7 +16,6 @@ void me_init_hubble_table(void)
   FILE *fd;
   int loop;
   double ia,ih;
-  double drift[HUBBLE_TABLE_LENGTH],gravkick[HUBBLE_TABLE_LENGTH],hydrokick[HUBBLE_TABLE_LENGTH];
   char fname[100];
   strcpy(fname,"hubble_table.txt");
   if(!(fd = fopen(fname, "r")))
@@ -48,6 +47,7 @@ void me_init_hubble_table(void)
 	fflush(stdout);
   }
   fclose(fd);
+  double drift[HUBBLE_TABLE_LENGTH],gravkick[HUBBLE_TABLE_LENGTH],hydrokick[HUBBLE_TABLE_LENGTH];
   double a[HUBBLE_TABLE_LENGTH],h[HUBBLE_TABLE_LENGTH];
   if(!(fd = fopen(fname, "r")))
 	{
@@ -69,12 +69,12 @@ void me_init_hubble_table(void)
 		gravkick[loop] = 1.0/(All.Hubble*h[loop]*a[loop]*a[loop]);
 		hydrokick[loop] = 1.0/(All.Hubble*h[loop]*pow(a[loop], 3 * GAMMA_MINUS1) * a[loop]);
 	}
-  MeHubbleAcc = gsl_interp_accel_alloc();
-  MeHubbleSpline = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
+  All.MeHubbleAcc = gsl_interp_accel_alloc();
+  All.MeHubbleSpline = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
   MeHubbleSplineDRIFT = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
   MeHubbleSplineGRAVKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
   MeHubbleSplineHYDROKICK = gsl_spline_alloc(gsl_interp_cspline, HUBBLE_TABLE_LENGTH);
-  gsl_spline_init(MeHubbleSpline, a, h, HUBBLE_TABLE_LENGTH);
+  gsl_spline_init(All.MeHubbleSpline, a, h, HUBBLE_TABLE_LENGTH);
   gsl_spline_init(MeHubbleSplineDRIFT, a, drift, HUBBLE_TABLE_LENGTH);
   gsl_spline_init(MeHubbleSplineGRAVKICK, a, gravkick, HUBBLE_TABLE_LENGTH);
   gsl_spline_init(MeHubbleSplineHYDROKICK, a, hydrokick, HUBBLE_TABLE_LENGTH);
@@ -139,9 +139,9 @@ void me_init_dmmass_table(void)
     {
 		fscanf(fd,"%lf,%lf\n",&a[loop],&m[loop]);
 	}
-  MeDMMassAcc = gsl_interp_accel_alloc();
-  MeDMMassSpline = gsl_spline_alloc(gsl_interp_cspline, DMMASS_TABLE_LENGTH);
-  gsl_spline_init(MeDMMassSpline, a, m, DMMASS_TABLE_LENGTH);
+  All.MeDMMassAcc = gsl_interp_accel_alloc();
+  All.MeDMMassSpline = gsl_spline_alloc(gsl_interp_cspline, DMMASS_TABLE_LENGTH);
+  gsl_spline_init(All.MeDMMassSpline, a, m, DMMASS_TABLE_LENGTH);
   if(ThisTask==0)
   {
     printf("DMMass Table loading done.\n");
